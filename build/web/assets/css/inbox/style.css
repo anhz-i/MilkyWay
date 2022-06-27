@@ -1,0 +1,127 @@
+* {
+    font-family: "Graphik Web","Helvetica Neue",Helvetica,Arial,sans-serif;;
+    padding: 0;
+    margin: 0;    
+    font-size: 15px;
+    color: black;
+}
+
+:root {
+    --ocean-color: #004AAD;
+    --ocean-color-hover: #295ea3;
+    --yellow-color: #FFDE59;
+}
+
+i {
+    color: var(--ocean-color) !important;
+    padding: 5px !important;
+}
+
+.clear {
+    clear: both !important;
+}
+
+header {
+    padding: 5px 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    font-size: 18px;
+    background-color: #FFDE59;
+}
+
+header .header-left {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 8px;
+}
+
+header i {
+    font-size: 20px;
+    padding: 0 10px !important;
+}
+
+header img {
+    transform: translateY(-10%);
+}
+
+main {    
+    width: 100%;
+}
+
+aside {
+    width: 230px;
+    height: 100vh;
+    position: fixed;
+    top: 46px;
+    left: 0;
+    background-color: rgba(226, 226, 226, 0.438);
+}
+
+.main-aside, .project {
+    margin: 40px 0 20px 15px;
+}
+
+.project h3 {
+    padding-left: 10px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.main-aside div {    
+    padding: 3px;
+    border-radius: 6px;
+}
+
+.main-aside div i {
+    margin: 0 15px !important;
+}
+
+main section {
+    margin-left: 250px;
+    padding-top: 30px;
+    padding-left: 40px;
+    padding-right: 50px;
+}
+
+
+section .title-row {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+
+section .title h3 {
+    font-weight: 700;
+}
+
+section .content hr {
+    margin: 5px;
+}
+
+section .content h3 {
+    font-weight: 700;
+    font-size: 16px;
+    padding-top: 30px;
+}
+
+section .content input {
+    padding: 0 5px;
+}
+
+section .content .task {
+
+}
+
+section .calendar {
+    display: block;
+    padding-left: 30px;
+    padding-bottom: 5px;
+    font-size: 13px;
+}
+
+section .content p {
+    display: inline-block;
+    margin: 0 20px;
+}
