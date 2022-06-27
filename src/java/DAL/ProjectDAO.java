@@ -78,27 +78,26 @@ public class ProjectDAO {
         }
     }
 
-    public void Update(int id, String name, String color, String date, String email, String view) {
-        String sql = "update Projects set name=?,color=?,date=?,email=?,view=? where id=?";
+    public void Update(int id, String name, String color, String view) {
+        String sql = "update Projects set [name]=?, color=?, [view]=? where id=?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(6, id);
+            ps.setInt(4, id);
             ps.setString(1, name);
-            ps.setString(2, color);
-            ps.setString(3, date);
-            ps.setString(4, email);
-            ps.setString(5, view);
+            ps.setString(2, color);            
+            ps.setString(3, view);
             ps.execute();
         } catch (SQLException e) {
             status = "Error at Update Student" + e.getMessage();
         }
+        System.out.println("updated");
     }
 
-    public void Delete(String id) {
-        String sql = "delete from Student where id=?";
+    public void Delete(int id) {
+        String sql = "delete from Projects where id=?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, id);
+            ps.setInt(1, id);
             ps.execute();
         } catch (SQLException e) {
             status = "Error at delete Student" + e.getMessage();
@@ -108,12 +107,11 @@ public class ProjectDAO {
     public static void main(String[] args) throws Exception {
         ProjectDAO p = new ProjectDAO();
         List<Project> list = p.getAll();
-        p.Insert(list.get(list.size() - 1).getId() + 1, "prj2", "brown", LocalDate.now().toString(), null, null);
+//        p.Insert(list.get(list.size() - 1).getId() + 1, "prj2", "brown", LocalDate.now().toString(), null, null);
         list = p.getAll();
-        System.out.println(list.get(2).getDate());
-        p.Update(1, "hhh", "red", null, null, null);
+        System.out.println(list.get(2).getDate());                
         list = p.getAll();
-        System.out.println(list.get(0).getName());
+        System.out.println("1."+list.get(0).getName());
         for (Project item : list) {
             System.out.println(item.getName());
         }

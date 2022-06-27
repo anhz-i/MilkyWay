@@ -12,12 +12,19 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">  
         <title>Milky Way</title>
-        <link rel="icon" type="image/x-icon" href="<c:url value="assets/image/favicon_io/favicon.ico"/>">                                
+        <link rel="icon" type="image/x-icon" href="<c:url value="/assets/image/favicon_io/favicon.ico"/>">                                
         <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.min.css"/>">        
         <link rel="stylesheet" href="<c:url value="/assets/css/inbox/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/inbox/responsive.css"/>">
         <script src="https://kit.fontawesome.com/4d809b9711.js" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            function onDelete(id) {
+                if (confirm("Are you sure to delete?")) {
+                    window.location = "deleteproject?id="+id;
+                }
+            }
+        </script>
     </head>
     <body>
         <header>
@@ -36,7 +43,7 @@
 
 
         <main>
-            <aside>
+            <aside style="overflow: scroll;">
                 <div class="main-aside">
                     <div>
                         <a href=""><i class="fa-solid fa-inbox"></i>Inbox </a>
@@ -52,13 +59,20 @@
                     </div>
                 </div>
                 <div class="project">
-                    <div>
+                    <div class="header-project" style="display: flex; justify-content: space-between; justify-items: center;">
                         <h3>Project</h3>       
-                        <a href="createproject" title="Add Project"><i class="fa-solid fa-plus"></i></a>
+                        <a style="margin: 15px 12px 10px 0;" href="createproject" title="Add Project"><i class="fa-solid fa-plus"></i></a>
                     </div>
-                    <c:forEach items="${requestScope.data}" var="c">
-                        <a href="#" style="display: block; margin-left: 20px;">${c.name}</a>
-                    </c:forEach>         
+                    <div class="extra-function">
+                        <c:forEach items="${requestScope.data}" var="c">
+                            <a href="#" style="margin-left: 20px;">${c.name}</a>
+                            <a href="" class="funtion-btn"><i class="fa-solid fa-ellipsis"></i></a>
+                            <div class="sub-function">
+                                <a href="updateproject?id=${c.id}">Edit Project</a>
+                                <a href="" onclick="onDelete('${c.id}')">Delete Project</a>
+                            </div>
+                        </c:forEach>     
+                    </div>          
                 </div>
             </aside>
             <section>
@@ -104,5 +118,6 @@
             </section>
             <div class="clear"></div>
         </main>        
+        
     </body>
 </html>
