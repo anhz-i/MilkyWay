@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,60 +22,17 @@
         <script type="text/javascript">
             function onDelete(id) {
                 if (confirm("Are you sure to delete?")) {
-                    window.location = "deleteproject?id="+id;
+                    window.location = "deleteproject?id=" + id;
                 }
             }
         </script>
     </head>
     <body>
-        <header>
-            <div class="header-left">
-                <a href=""><i class="fa-solid fa-bars"></i></a>
-                <a href="" title="Home"><i class="fa-solid fa-house"></i></a>
-                <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
-            </div>  
-            <div>
-                <a href="" title="Add Task"><i class="fa-solid fa-plus"></i></a>
-                <a href="">
-                    <img src="<c:url value="/assets/image/logo/1.png"/>" alt="" width="40px">                    
-                </a>
-            </div>
-        </header>
+
+        <%@include file="LeftAside.jsp" %>
 
 
         <main>
-            <aside style="overflow: scroll;">
-                <div class="main-aside">
-                    <div>
-                        <a href=""><i class="fa-solid fa-inbox"></i>Inbox </a>
-                    </div>
-                    <div>
-                        <a href=""><i class="fa-solid fa-calendar"></i>Today</a>
-                    </div>
-                    <div>
-                        <a href=""><i class="fa-solid fa-calendar-days"></i>Upcoming</a>
-                    </div>
-                    <div>
-                        <a href=""><i class="fa-solid fa-filter"></i>Filters</a>
-                    </div>
-                </div>
-                <div class="project">
-                    <div class="header-project" style="display: flex; justify-content: space-between; justify-items: center;">
-                        <h3>Project</h3>       
-                        <a style="margin: 15px 12px 10px 0;" href="createproject" title="Add Project"><i class="fa-solid fa-plus"></i></a>
-                    </div>
-                    <div class="extra-function">
-                        <c:forEach items="${requestScope.data}" var="c">
-                            <a href="#" style="margin-left: 20px;">${c.name}</a>
-                            <a href="" class="funtion-btn"><i class="fa-solid fa-ellipsis"></i></a>
-                            <div class="sub-function">
-                                <a href="updateproject?id=${c.id}">Edit Project</a>
-                                <a href="" onclick="onDelete('${c.id}')">Delete Project</a>
-                            </div>
-                        </c:forEach>     
-                    </div>          
-                </div>
-            </aside>
             <section>
                 <div class="title-row">
                     <div class="title">
@@ -87,37 +45,22 @@
 
                 </div>
                 <hr>
-                <div class="content">
-                    <h3>Priority 1</h3>
-                    <hr>
-                    <div class="task">
-                        <input type="checkbox" name="" id=""> 
-                        <p>Learn something</p>
-                        <a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i>6 June</a>                    
-                    </div>
-                    <hr>
+                <div class="content">                    
+                    <c:forEach items="${requestScope.task}" var="t">
+                        <div class="task">
+                            <input type="checkbox" name="" id=""> 
+                            <p>${t.name}</p>
+                            ${(t.dueDate!=null?'<a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i><fmt:formatDate type="date" value="${t.dueDate}" /> </a>':'')}                    
+                        </div>
+                        <hr>
+                    </c:forEach>                    
                     <div>
                         <a href="" title="Add Task"><i class="fa-solid fa-plus"></i>Ask Task</a>                    
                     </div>
-                </div>
-                <div class="content">
-                    <h3>Priority 2</h3>
-                    <hr>
-                    <input type="checkbox" name="" id="">
-                    <p>Learn something</p>
-                    <a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i>6 June</a>                    
-                    <hr>
-                    <input type="checkbox" name="" id="">
-                    <p>Learn something</p>
-                    <a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i>6 June</a>                    
-                    <hr>
-                    <div>
-                        <a href="" title="Add Task"><i class="fa-solid fa-plus"></i>Ask Task</a>                    
-                    </div>
-                </div>
+                </div>                
             </section>
             <div class="clear"></div>
         </main>        
-        
+
     </body>
 </html>

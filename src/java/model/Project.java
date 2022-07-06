@@ -14,15 +14,13 @@ public class Project {
 
     private int id;
     private String name;
-    private String color = "tomato";
+    private String color;
     private String date = LocalDate.now().toString();
     private String email;
-    private String view = "list";
+    private String view;
 
-    public Project() {
-        color = "tomato";
-        date = LocalDate.now().toString();
-        view = "list";
+    public Project() {        
+        date = LocalDate.now().toString();        
     }
 
     public Project(int id, String name, String color, String date, String email, String view) {

@@ -12,9 +12,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 import model.Project;
+import model.User;
 
 /**
  *
@@ -62,14 +62,14 @@ public class UpdateProjectServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");
-        ProjectDAO p = new ProjectDAO();
+        ProjectDAO p = new ProjectDAO();        
         try {
             Project temp = p.getProject(Integer.parseInt(id));
             request.setAttribute("project", temp);
             request.getRequestDispatcher("view/UpdateProject.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println(e);
-        }
+        }        
     }
 
     /**
@@ -98,7 +98,7 @@ public class UpdateProjectServlet extends HttpServlet {
             request.setAttribute("error", "Don't update");
             request.getRequestDispatcher("view/UpdateProject.jsp").forward(request, response);
         }
-
+        
     }
 
     /**

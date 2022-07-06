@@ -25,7 +25,7 @@
                 <a href="index.html"><img src="<c:url value="/assets/image/logo/2.png"/>" alt="logohome" style="width: 150px;"></a>                
             </nav>        
         </header>
-        
+
         <main>
             <h1 class="title">Sign up</h1>
             <div class="login">
@@ -41,30 +41,26 @@
                     <hr>
                     <div>
                         <form action="signup" method="post">
-                            <div>
-                                <div>
-                                    <label for="email-login">Email</label>
-                                    <input class="grey-border" id="email-login" type="email" placeholder="Enter your email" name="email">
-                                </div>
+                            <div>                                
+                                <label for="email-login">Email</label>
+                                <input class="grey-border" id="email-login" type="email" placeholder="Enter your email" name="email" required>                                
                             </div>
                             <div>
-                                <div>
-                                    <label for="pass-login">Password</label>
-                                    <input class="grey-border" id="pass-login" type="password" placeholder="Enter your password" name="pass">
-                                </div>
+                                <label for="pass-login">Password</label>
+                                <input class="grey-border" id="pass-login" type="password" placeholder="Enter your password" name="pass" required>
                             </div>
                             <div>
-                                <div>
-                                    <label for="pass-login2">Confirm Password</label>
-                                    <input class="grey-border" id="pass-login2" type="password2" placeholder="Re-enter your password" name="pass">
-                                </div>
+                                <label for="pass-login2">Confirm Password</label>
+                                <input class="grey-border" id="pass-login2" type="password" placeholder="Re-enter your password" name="cfpass" required>
                             </div>
                             <div class="bton-login">
-                                <input class="theme-background" type="button" value="Sign up with Email">
+                                <input class="theme-background" type="submit" value="Sign up with Email">
                             </div>
                         </form>
                     </div>
-                    
+
+                    <p style="color: red;">${requestScope.error}</p>
+
                     <hr>
                     <p class="create-account">Already signed up? <a href="login">Log in</a></p>
                 </div>
@@ -72,7 +68,7 @@
                     <img src="<c:url value="/assets/image/login/loginmain (2).png"/>" alt="" width="90%">
                 </div>
             </div>
-            
+
         </main>        
     </body>
 </html>

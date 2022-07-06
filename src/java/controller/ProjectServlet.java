@@ -5,6 +5,7 @@
 package controller;
 
 import DAL.ProjectDAO;
+import DAL.TaskDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,10 +13,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Project;
+import model.Task;
+import model.User;
 
 /**
  *
@@ -36,17 +39,17 @@ public class ProjectServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProjectServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ProjectServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        try {            
+//            
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");            
+            ProjectDAO p = new ProjectDAO();
+            List<Project> list = p.getProjectbyEmail(user.getEmail());
+            session.setAttribute("data", list);            
+//            request.getRequestDispatcher("view/inbox.jsp").forward(request, response);
+            response.sendRedirect("gettask");
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
     }
 
@@ -62,14 +65,7 @@ public class ProjectServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            ProjectDAO p = new ProjectDAO();
-            List<Project> list = p.getAll();
-            request.setAttribute("data", list);
-            request.getRequestDispatcher("view/inbox.jsp").forward(request, response);
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
+        processRequest(request, response);
 
     }
 

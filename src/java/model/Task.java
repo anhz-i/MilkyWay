@@ -11,12 +11,12 @@ package model;
 public class Task {
     private int id;
     private String name, startDate, dueDate, description;
-    private int priority, sectionID;    
+    private int priority, sectionID, projectID;    
 
     public Task() {
     }
 
-    public Task(int id, String name, String startDate, String dueDate, String description, int priority, int sectionID) {
+    public Task(int id, String name, String startDate, String dueDate, String description, int priority, int sectionID, int projectID) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -24,6 +24,7 @@ public class Task {
         this.description = description;
         this.priority = priority;
         this.sectionID = sectionID;
+        this.projectID = projectID;
     }
 
     public int getId() {
@@ -81,6 +82,14 @@ public class Task {
     public void setSectionID(int sectionID) {
         this.sectionID = sectionID;
     }
-    
-    
+
+    public int getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
+    }
+
+        
 }

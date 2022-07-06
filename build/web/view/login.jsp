@@ -25,9 +25,10 @@
                 <a href="index.html"><img src="<c:url value="/assets/image/logo/2.png"/>" alt="logohome" style="width: 150px;"></a>                
             </nav>        
         </header>
-        
+
         <main>
             <h1 class="title">Log in</h1>
+            <p style="color: red;">${requestScope.mes}</p>
             <div class="login">
                 <div class="login-main">
                     <div>
@@ -44,31 +45,33 @@
                             <div>
                                 <div>
                                     <label for="email-login">Email</label>
-                                    <input class="grey-border" id="email-login" type="email" placeholder="Enter your email" name="email">
+                                    <input class="grey-border" id="email-login" type="email" placeholder="Enter your email" name="email" required>
                                 </div>
                             </div>
                             <div>
                                 <div>
                                     <label for="pass-login">Password</label>
-                                    <input class="grey-border" id="pass-login" type="password" placeholder="Enter your password" name="pass">
+                                    <input class="grey-border" id="pass-login" type="password" placeholder="Enter your password" name="pass" required>
                                 </div>
                             </div>
                             <div class="bton-login">
-                                <input class="theme-background" type="button" value="Log in">
+                                <input class="theme-background" type="submit" value="Log in">
                             </div>
                         </form>
                     </div>
+                    <p style="color: red;">${requestScope.error}</p>
+
                     <div class="forgotpass">
-                        <a class="grey-text" href="">Forgot your password</a>                    
+                        <a class="grey-text" href="forgetpass">Forgot your password</a>                    
                     </div>
                     <hr>
                     <p class="create-account">Don't have an account? <a href="signup">Sign up</a></p>
-                </div>
+                </div>                                
                 <div class="img-login">
                     <img src="<c:url value="/assets/image/login/loginmain (2).png"/>" alt="" width="90%">
                 </div>
             </div>
-            
+
         </main>        
     </body>
 </html>

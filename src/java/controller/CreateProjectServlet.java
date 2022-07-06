@@ -12,9 +12,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
 import model.Project;
+import model.User;
 
 /**
  *
@@ -76,15 +78,17 @@ public class CreateProjectServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         String name = request.getParameter("name");
         String color = request.getParameter("color");
         String view = request.getParameter("view");
         String date = LocalDate.now().toString();
-        String email = "";
+        String email = user.getEmail();
         ProjectDAO p = new ProjectDAO();
         try {
             List<Project> list = p.getAll();
-            p.Insert(list.get(list.size() - 1).getId() + 1, name, color, date, null, view);
+            p.Insert(list.get(list.size() - 1).getId() + 1, name, color, date, email, view);
             response.sendRedirect("project");
 //            request.getRequestDispatcher("project").forward(request, response);
 

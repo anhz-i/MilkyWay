@@ -6,6 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="model.Value" %>
+<%@page import="model.Project" %>
+<%@page import="java.util.List" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -22,7 +26,7 @@
     </head>
     <body>
         <header>
-            <h3>Add Project</h3>
+            <h3>Update Project</h3>
         </header>
         <hr>
         <main>
@@ -35,27 +39,24 @@
                 </div>
                 <div>
                     <label for="color">Color</label>
-                    <select name="color" value="${c.color}">
-                        <option value="tomato" style="background-color: tomato;">Tomato</option>
-                        <option value="red" style="background-color: red;">Red</option>
-                        <option value="orange" style="background-color: orange;">Orange</option>
-                        <option value="yellow" style="background-color: yellow;">Yellow</option>
-                        <option value="olive" style="background-color: olive;">Olive</option>
-                        <option value="limegreen" style="background-color: limegreen;">Lime Green</option>
-                        <option value="green" style="background-color: Green;">Green</option>
-                        <option value="mint" style="background-color: mediumaquamarine;">Mint</option>
-                        <option value="teal" style="background-color: teal;">Teal</option>
-                        <option value="skyblue" style="background-color: skyblue;">Sky Blue</option>
-                        <option value="lightblue" style="background-color: lightblue;">Light Blue</option>
-                        <option value="blue" style="background-color: blue;">Blue</option>
-                        <option value="grape" style="background-color: purple;">Grape</option>
-                        <option value="violet" style="background-color: violet;">Violet</option>
-                        <option value="lavender" style="background-color: mediumorchid;">Lavender</option>
-                        <option value="magenta" style="background-color: magenta;">Magenta</option>
-                        <option value="salmon" style="background-color: salmon;">Salmon</option>
-                        <option value="charcoal" style="background-color: darkgray;">Charcoal</option>
-                        <option value="grey" style="background-color: grey;">Grey</option>
-                        <option value="taupe" style="background-color: tan;">Taupe</option>
+                    <select name="color">                        
+                        <%
+                        Value x = new Value();
+                        List<String> list = x.getColor(); 
+                        Project p = (Project) request.getAttribute("project");     
+                        %>
+                        <option value="<%=p.getColor()%>" style="background-color: <%=p.getColor()%>;" selected>${c.color}</option>
+
+                        <%
+                        for (String item : list) {
+                            if (!item.equals(p.getColor())) {
+                        %>
+                        <option value="<%=item%>" style="background-color: <%=item%>;"><%=item%></option>
+                        <%
+                            }
+                        }
+                        %>
+
                     </select>                    
                 </div>
                 <div>
@@ -66,14 +67,15 @@
                 </div>
                 <div>
                     <label>View</label>
+                    <p>${c.view}</p>
                     <div>
                         <div>
                             <img src="<c:url value="/assets/image/View/list.png"/>" alt="list"/>
-                            <input type="radio" name="view" value="list" checked="checked">List
+                            <input type="radio" name="view" value="list" ${c.view == 'list'?'checked':''}>List
                         </div>
                         <div>
                             <img src="<c:url value="/assets/image/View/board.png"/>" alt="board"/>
-                            <input type="radio" name="view" value="board">Board
+                            <input type="radio" name="view" value="board" ${c.view == 'board'?'checked':''}>Board
                         </div>
                     </div>
                 </div>

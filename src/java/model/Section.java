@@ -10,12 +10,13 @@ package model;
  */
 public class Section {
     private int id;
-    private String name, date, projectID;
+    private String name, date;
+    private int projectID;
 
     public Section() {
     }
 
-    public Section(int id, String name, String date, String projectID) {
+    public Section(int id, String name, String date, int projectID) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -46,13 +47,13 @@ public class Section {
         this.date = date;
     }
 
-    public String getProjectID() {
+    public int getProjectID() {
         return projectID;
     }
 
-    public void setProjectID(String projectID) {
+    public void setProjectID(int projectID) {
         this.projectID = projectID;
     }
-    
-    
+
+        
 }

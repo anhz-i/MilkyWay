@@ -11,7 +11,6 @@ import model.Project;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 /**
  *
@@ -39,6 +38,23 @@ public class ProjectDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ar.add(new Project(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
+            }
+        } catch (SQLException e) {
+            status = "Error at read account" + e.getMessage();
+        }
+        return ar;
+    }
+
+    public List<Project> getProjectbyEmail(String email) throws Exception {
+        String sql = "select * from Projects where UserEmail=?";
+        ArrayList<Project> ar = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ar.add(new Project(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));                
             }
         } catch (SQLException e) {
             status = "Error at read account" + e.getMessage();
@@ -84,11 +100,11 @@ public class ProjectDAO {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(4, id);
             ps.setString(1, name);
-            ps.setString(2, color);            
+            ps.setString(2, color);
             ps.setString(3, view);
             ps.execute();
         } catch (SQLException e) {
-            status = "Error at Update Student" + e.getMessage();
+            status = "Error at Update Projects" + e.getMessage();
         }
         System.out.println("updated");
     }
@@ -100,20 +116,25 @@ public class ProjectDAO {
             ps.setInt(1, id);
             ps.execute();
         } catch (SQLException e) {
-            status = "Error at delete Student" + e.getMessage();
+            status = "Error at delete Projects" + e.getMessage();
         }
     }
 
     public static void main(String[] args) throws Exception {
         ProjectDAO p = new ProjectDAO();
-        List<Project> list = p.getAll();
+        List<Project> list;
 //        p.Insert(list.get(list.size() - 1).getId() + 1, "prj2", "brown", LocalDate.now().toString(), null, null);
         list = p.getAll();
-        System.out.println(list.get(2).getDate());                
-        list = p.getAll();
-        System.out.println("1."+list.get(0).getName());
+        System.out.println(list.get(2).getDate());
+//        p.Delete(4);
+        list = p.getProjectbyEmail("anhnapu2002@gmail.com");
+        System.out.println("1." + list.get(0).getName());
         for (Project item : list) {
-            System.out.println(item.getName());
+            System.out.println(". " + item.getName());
+        }
+        System.out.println(p.getProject(1).getView());
+        if (p.getProject(1).getView().trim().equals("list")) {
+            System.out.println("1");
         }
     }
 }

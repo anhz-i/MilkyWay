@@ -4,13 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/DAL/ProjectDAO.java</file>
-            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/controller/DeleteProjectServlet.java</file>
-            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/controller/CreateProjectServlet.java</file>
-            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/web/view/inbox.jsp</file>
+            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/controller/ProjectServlet.java</file>
+            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/controller/LoginServlet.java</file>
             <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/controller/UpdateProjectServlet.java</file>
-            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/web/view/CreateProject.jsp</file>
-            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/web/assets/css/inbox/style.css</file>
-            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/web/view/UpdateProject.jsp</file>
+            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/web/view/signup.jsp</file>
+            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/controller/SignupServlet.java</file>
+            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/DAL/UserDAO.java</file>
+            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/web/view/login.jsp</file>
+            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/model/User.java</file>
         </group>
     </open-files>
 </project-private>

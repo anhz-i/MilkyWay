@@ -6,6 +6,9 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="java.util.List" %>
+<%@page import="model.Value" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -35,26 +38,15 @@
                 <div>
                     <label for="color">Color</label>
                     <select name="color">
-                        <option value="tomato" style="background-color: tomato;">Tomato</option>
-                        <option value="red" style="background-color: red;">Red</option>
-                        <option value="orange" style="background-color: orange;">Orange</option>
-                        <option value="yellow" style="background-color: yellow;">Yellow</option>
-                        <option value="olive" style="background-color: olive;">Olive</option>
-                        <option value="limegreen" style="background-color: limegreen;">Lime Green</option>
-                        <option value="green" style="background-color: Green;">Green</option>
-                        <option value="mint" style="background-color: mediumaquamarine;">Mint</option>
-                        <option value="teal" style="background-color: teal;">Teal</option>
-                        <option value="skyblue" style="background-color: skyblue;">Sky Blue</option>
-                        <option value="lightblue" style="background-color: lightblue;">Light Blue</option>
-                        <option value="blue" style="background-color: blue;">Blue</option>
-                        <option value="grape" style="background-color: purple;">Grape</option>
-                        <option value="violet" style="background-color: violet;">Violet</option>
-                        <option value="lavender" style="background-color: mediumorchid;">Lavender</option>
-                        <option value="magenta" style="background-color: magenta;">Magenta</option>
-                        <option value="salmon" style="background-color: salmon;">Salmon</option>
-                        <option value="charcoal" style="background-color: darkgray;">Charcoal</option>
-                        <option value="grey" style="background-color: grey;">Grey</option>
-                        <option value="taupe" style="background-color: tan;">Taupe</option>
+                        <%
+                        Value x = new Value();
+                        List<String> list = x.getColor();                         
+                        for (String item : list) {
+                        %>
+                        <option value="<%=item%>" style="background-color: <%=item%>;"><%=item%></option>
+                        <%
+                        }
+                        %>
                     </select>                    
                 </div>
                 <div>
