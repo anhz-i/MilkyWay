@@ -50,12 +50,18 @@
                         <div class="task">
                             <input type="checkbox" name="" id=""> 
                             <p>${t.name}</p>
-                            ${(t.dueDate!=null?'<a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i><fmt:formatDate type="date" value="${t.dueDate}" /> </a>':'')}                    
+                            <a href="deletetask?id=${t.id}"><i class="fa-regular fa-trash-can"></i></a>
+                            <a href="updatetask?id=${t.id}"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href=""><i class="fa-regular fa-comment"></i></a>
+                            <c:if test="${(t.dueDate!=null)}">
+                                <a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i>${t.dueDate}</a>
+                            </c:if>
+
                         </div>
                         <hr>
                     </c:forEach>                    
                     <div>
-                        <a href="" title="Add Task"><i class="fa-solid fa-plus"></i>Ask Task</a>                    
+                        <a href="addtask?projectid=&&sectionid=" title="Add Task"><i class="fa-solid fa-plus"></i>Ask Task</a>                    
                     </div>
                 </div>                
             </section>

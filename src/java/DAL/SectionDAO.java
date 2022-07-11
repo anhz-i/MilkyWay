@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import model.Project;
 import model.Section;
 
 /**
@@ -18,6 +17,7 @@ import model.Section;
  * @author Hp
  */
 public class SectionDAO {
+
     Connection con;
     String status;
 
@@ -54,10 +54,27 @@ public class SectionDAO {
             ps.setInt(1, idPro);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                ar.add(new Section(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));                
+                ar.add(new Section(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
             }
         } catch (SQLException e) {
             status = "Error at read section" + e.getMessage();
+        }
+        return ar;
+    }
+
+    public List<Section> searchSectionbyName(String name) throws Exception {
+        String sql = "select * from Sections where [name] like ?";
+        ArrayList<Section> ar = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + name + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ar.add(new Section(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
+            }
+        } catch (SQLException e) {
+            status = "Error at read Section" + e.getMessage();
         }
         return ar;
     }
@@ -83,9 +100,9 @@ public class SectionDAO {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
-            ps.setString(2, name);            
+            ps.setString(2, name);
             ps.setString(3, date);
-            ps.setInt(4, projectID);            
+            ps.setInt(4, projectID);
             ps.execute();
         } catch (SQLException e) {
             status = "Error at Insert Student" + e.getMessage();
@@ -97,7 +114,7 @@ public class SectionDAO {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(2, id);
-            ps.setString(1, name);            
+            ps.setString(1, name);
             ps.execute();
         } catch (SQLException e) {
             status = "Error at Update Projects" + e.getMessage();

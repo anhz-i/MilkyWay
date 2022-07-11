@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="<c:url value="/assets/css/bootstrap.min.css"/>">        
         <link rel="stylesheet" href="<c:url value="/assets/css/inbox/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/inbox/responsive.css"/>">
-        <script src="https://kit.fontawesome.com/4d809b9711.js" crossorigin="anonymous"></script>        
+        <script src="https://kit.fontawesome.com/4d809b9711.js" crossorigin="anonymous"></script>                
     </head>
     <body>        
 
@@ -31,6 +31,10 @@
                 <a href="" title="Add Task"><i class="fa-solid fa-plus"></i></a>
                 <a href="">
                     <img src="<c:url value="/assets/image/logo/1.png"/>" alt="" width="40px">                    
+                    <div>
+                        <a href="">Edit Account</a>
+                        <a href="">Log out</a>
+                    </div>
                 </a>
             </div>
         </header>
@@ -38,7 +42,7 @@
         <aside style="overflow: scroll;">
             <div class="main-aside">
                 <div>
-                    <a href=""><i class="fa-solid fa-inbox"></i>Inbox </a>
+                    <a href="project"><i class="fa-solid fa-inbox"></i>Inbox </a>
                 </div>
                 <div>
                     <a href=""><i class="fa-solid fa-calendar"></i>Today</a>
@@ -47,7 +51,7 @@
                     <a href=""><i class="fa-solid fa-calendar-days"></i>Upcoming</a>
                 </div>
                 <div>
-                    <a href=""><i class="fa-solid fa-filter"></i>Filters</a>
+                    <a href="view/Search.jsp"><i class="fa-solid fa-magnifying-glass"></i>Search</a>
                 </div>
             </div>
             <div class="project">

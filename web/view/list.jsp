@@ -8,6 +8,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="model.Section" %>
 <%@page import="model.Task" %>
+<%@page import="model.Project" %>
 <%@page import="DAL.TaskDAO" %>
 <%@page import="java.util.List" %>
 
@@ -40,7 +41,7 @@
             <section>
                 <div class="title-row">
                     <div class="title">
-                        <h3>${requestScope.project.name}</h3>
+                        <h3>${requestScope.project.name}</h3>                        
                     </div>
                     <div>
                         <a href="" title="comment"><i class="fa-solid fa-comment"></i></a>
@@ -49,16 +50,49 @@
 
                 </div>
                 <div>
-                    <a href="" title="Add Task"><i class="fa-solid fa-plus"></i>Ask Task</a>                    
+                    <a href="addtask?projectid=${requestScope.project.id}" title="Add Task"><i class="fa-solid fa-plus"></i>Ask Task</a>                    
+                </div>
+                <hr>
+                <div class="content">
+                    <%
+                    TaskDAO t = new TaskDAO();
+                    Project p = (Project) request.getAttribute("project");
+                    try {
+                        List<Task> taskpro = t.getTaskbyProjectID(p.getId());
+                        for (Task itask : taskpro) {
+                            if (itask.getSectionID() == null) {
+                    %>
+                    <div class="task">
+                        <input type="checkbox" name="" id=""> 
+                        <p><%=itask.getName()%></p>    
+                        <a href="deletetask?id=<%=itask.getId()%>"><i class="fa-regular fa-trash-can"></i></a>
+                        <a href="updatetask?id=<%=itask.getId()%>"><i class="fa-regular fa-pen-to-square"></i></a>
+                        <a href=""><i class="fa-regular fa-comment"></i></a>
+                            <% if (itask.getDueDate() != null) {%>
+                        <a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i><%=itask.getDueDate()%></a>                       
+                            <% } %>                        
+                    </div>
+                    <hr>
+                    <%
+                        }
+                        }
+                    } catch (Exception ex) {                            
+                    }
+                    %>                 
+
+                </div>         
+                <div>
+                    <a href="addsection?projectid=${requestScope.project.id}" title="Add Section"><i class="fa-solid fa-plus"></i>Add Section</a>                                        
                 </div>
                 <hr>
                 <div class="content">
                     <%
                     List<Section> section = (List<Section>) request.getAttribute("section");
-                    TaskDAO t = new TaskDAO();
                     for (Section item : section) {
                     %>
                     <h3><%=item.getName()%></h3>
+                    <a href="deletesection?id=<%=item.getId()%>"><i class="fa-regular fa-trash-can"></i></a>
+                    <a href="updatesection?id=<%=item.getId()%>"><i class="fa-regular fa-pen-to-square"></i></a>
                     <%
                         try {
                             List<Task> task = t.getTaskbySectionID(item.getId());
@@ -67,18 +101,26 @@
                     <div class="task">
                         <input type="checkbox" name="" id=""> 
                         <p><%=itask.getName()%></p>
-                        ${(t.dueDate!=null?'<a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i><fmt:formatDate type="date" value="${t.dueDate}" /> </a>':'')}                    
+                        <a href="deletetask?id=<%=itask.getId()%>"><i class="fa-regular fa-trash-can"></i></a>
+                        <a href="updatetask?id=<%=itask.getId()%>"><i class="fa-regular fa-pen-to-square"></i></a>
+                        <a href=""><i class="fa-regular fa-comment"></i></a>
+                            <% if (itask.getDueDate() != null) {%>
+                        <a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i><%=itask.getDueDate()%></a>                       
+                            <% } %>  
                     </div>
                     <hr>
                     <%
                             }
                         } catch (Exception ex) {                            
                         }
+                    %>
+                    <div>
+                        <a href="addtask?projectid=${requestScope.project.id}&&sectionid=<%=item.getId()%>" title="Add Task"><i class="fa-solid fa-plus"></i>Ask Task</a>                    
+                    </div>
+                    <%
                     }
                     %>                    
-                    <div>
-                        <a href="" title="Add Task"><i class="fa-solid fa-plus"></i>Ask Task</a>                    
-                    </div>
+
                 </div>              
             </section>
             <div class="clear"></div>

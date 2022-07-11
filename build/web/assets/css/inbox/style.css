@@ -29,6 +29,11 @@ header {
     align-content: center;
     font-size: 18px;
     background-color: #FFDE59;
+    position: fixed;
+    z-index: 3;
+    right: 0;
+    left: 0;
+    top: 0;
 }
 
 header .header-left {
@@ -49,6 +54,9 @@ header img {
 
 main {
     width: 100%;
+    overflow: scroll;
+    margin-top: 40px;
+    height: 100vh;
 }
 
 aside {

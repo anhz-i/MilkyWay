@@ -26,6 +26,7 @@
                 }
             }
         </script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
 
@@ -36,7 +37,7 @@
             <section>
                 <div class="title-row">
                     <div class="title">
-                        <h3>Inbox</h3>
+                        <h3>Search</h3>
                     </div>
                     <div>
                         <a href="" title="comment"><i class="fa-solid fa-comment"></i></a>
@@ -45,28 +46,36 @@
 
                 </div>
                 <hr>
-                <div class="content">                    
-                    <c:forEach items="${requestScope.task}" var="t">
-                        <div class="task">
-                            <input type="checkbox" name="" id=""> 
-                            <p>${t.name}</p>
-                            <a href="deletetask?id=${t.id}"><i class="fa-regular fa-trash-can"></i></a>
-                            <a href="updatetask?id=${t.id}"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a href=""><i class="fa-regular fa-comment"></i></a>
-                            <c:if test="${(t.dueDate!=null)}">
-                                <a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i>${t.dueDate}</a>
-                            </c:if>
+                <input oninput="search(this)" type="text" name="txt" placeholder="Search" >
 
-                        </div>
-                        <hr>
-                    </c:forEach>                    
-                    <div>
-                        <a href="addtask?projectid=&&sectionid=" title="Add Task"><i class="fa-solid fa-plus"></i>Ask Task</a>                    
+                <div class="content">                                        
+                    <div class="task">
+                        <p>hhh</p>
                     </div>
+                    <hr>
                 </div>                
             </section>
             <div class="clear"></div>
         </main>        
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            function search(param) {
+                var txtSearch = param.value;
+                $.ajax({
+                    url: "/FinalProject/search",
+                    type: "get",
+                    data: {
+                        txt: txtSearch
+                    },
+                    success: function (data) {
+                        var content = document.getElementsByClassName("content");
+                        content.innerHTML = "123";
+                    },
+                    error: function (xhr) {
+                        console.log("error");
+                    }
+                });
+            }
+        </script>
     </body>
 </html>

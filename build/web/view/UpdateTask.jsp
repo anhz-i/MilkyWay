@@ -15,12 +15,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action="addtask?projectid=${requestScope.proid}&&sectionid=${requestScope.secid}" method="post">
+        <form action="updatetask?id=${requestScope.task.id}" method="post">
             <div>
-                <input type="text" name="name" id="name" placeholder="TaskName" required>
+                <input type="text" name="name" id="name" placeholder="TaskName" value="${requestScope.task.name}" required>
             </div>
             <div>
-                <input type="text" name="description" id="description" placeholder="Description">
+                <input type="text" name="description" id="description" placeholder="Description" value="${requestScope.task.description}">
             </div>
             <div>
                 <%                
@@ -42,7 +42,7 @@
                     <a href="">Create</a>
                 </div>
             </div>
-            <input type="submit" value="Add">
+            <input type="submit" value="Update">
         </form>
     </body>
 </html>

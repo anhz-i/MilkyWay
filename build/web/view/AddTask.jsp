@@ -5,6 +5,9 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.util.Date" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,22 +15,34 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action="addtask">
+        <form action="addtask?projectid=${requestScope.proid}&&sectionid=${requestScope.secid}" method="post">
             <div>
-                <input type="text" name="name" id="name" value="TaskName" required>
+                <input type="text" name="name" id="name" placeholder="TaskName" required>
             </div>
             <div>
-                <input type="text" name="description" id="description" value="Description" required>
+                <input type="text" name="description" id="description" placeholder="Description">
             </div>
             <div>
-                <input type="date" name="duedate" id="duedate" required>
+                <%                
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String date = simpleDateFormat.format(new Date());
+                %>
+                <input type="date" name="duedate" id="duedate" min="<%=date%>">
             </div>
             <select name="priority">                
                 <option value="1">Priority 1</option>
                 <option value="2">Priority 2</option>
                 <option value="3">Priority 3</option>
-                <option value="4">Priority 4</option>
+                <option value="4" selected>Priority 4</option>
             </select>
+            <div>
+                <input type="checkbox" name="tag" value="Read">Read
+                <div>
+                    <input type="text" name="tag">
+                    <a href="">Create</a>
+                </div>
+            </div>
+            <input type="submit" value="Add">
         </form>
     </body>
 </html>
