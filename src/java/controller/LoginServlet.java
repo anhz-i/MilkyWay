@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -62,7 +63,13 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("view/login.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        User us = (User) session.getAttribute("user");
+        if (us != null) {
+            response.sendRedirect("project");
+        } else {
+            request.getRequestDispatcher("view/login.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -95,6 +102,12 @@ public class LoginServlet extends HttpServlet {
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", user);
+                Cookie e = new Cookie("emailC", email);
+                Cookie p = new Cookie("passC", pass);
+                e.setMaxAge(60 * 60 * 24 * 7);
+                p.setMaxAge(60 * 60 * 24 * 7);
+                response.addCookie(e);
+                response.addCookie(p);
                 response.sendRedirect("project");
             }
         } catch (Exception ex) {

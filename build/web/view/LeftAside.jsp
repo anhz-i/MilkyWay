@@ -18,6 +18,14 @@
         <link rel="stylesheet" href="<c:url value="/assets/css/inbox/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/inbox/responsive.css"/>">
         <script src="https://kit.fontawesome.com/4d809b9711.js" crossorigin="anonymous"></script>                
+        <script>
+            function showprofile() {
+                var pro = document.getElementById("account-manage");
+//                pro.setAttribute('style', 'display: flex');
+                pro.style.display = 'block';
+            }
+
+        </script>
     </head>
     <body>        
 
@@ -27,37 +35,41 @@
                 <a href="" title="Home"><i class="fa-solid fa-house"></i></a>
                 <a href=""><i class="fa-solid fa-magnifying-glass"></i></a>
             </div>  
-            <div>
-                <a href="" title="Add Task"><i class="fa-solid fa-plus"></i></a>
-                <a href="">
-                    <img src="<c:url value="/assets/image/logo/1.png"/>" alt="" width="40px">                    
-                    <div>
-                        <a href="">Edit Account</a>
-                        <a href="">Log out</a>
+            <div style="display: flex; align-items: center">
+                <a href="" title="Add Task"><i class="fa-solid fa-plus"></i></a>                
+                <div class="pro">
+                    <img id="profile-img" src="<c:url value="/assets/image/logo/1.png"/>" alt="" width="40px">                                        
+                    <div id="account-manage" style="background-color: white; padding: 20px; border-radius: 6px; box-shadow: 3px 3px 3px #ccc; display: none; position: absolute; width: 150px; right: 0;">
+                        <a href="updateaccount">Edit Account</a>
+                        <form action="logout">
+                            <input type="submit" value="Log out" style="background: none; border: none;">
+                        </form>
+                        <!--<a href="logout">Log out</a>-->
                     </div>
-                </a>
+                </div>                
+
             </div>
         </header>
-                
+
         <aside style="overflow: scroll;">
             <div class="main-aside">
                 <div>
                     <a href="project"><i class="fa-solid fa-inbox"></i>Inbox </a>
                 </div>
                 <div>
-                    <a href=""><i class="fa-solid fa-calendar"></i>Today</a>
+                    <a href="today"><i class="fa-solid fa-calendar"></i>Today</a>
                 </div>
                 <div>
-                    <a href=""><i class="fa-solid fa-calendar-days"></i>Upcoming</a>
+                    <a href="upcoming"><i class="fa-solid fa-calendar-days"></i>Upcoming</a>
                 </div>
                 <div>
-                    <a href="view/Search.jsp"><i class="fa-solid fa-magnifying-glass"></i>Search</a>
+                    <a href="search"><i class="fa-solid fa-magnifying-glass"></i>Search</a>
                 </div>
             </div>
             <div class="project">
                 <div class="header-project" style="display: flex; justify-content: space-between; justify-items: center;">
                     <h3>Project</h3>       
-                    <a style="margin: 15px 12px 10px 0;" href="createproject" title="Add Project"><i class="fa-solid fa-plus"></i></a>
+                    <a style="margin: 15px 12px 10px 0;" href="createproject" title="Add Project" onclick="createproject()"><i class="fa-solid fa-plus"></i></a>
                 </div>
                 <div class="extra-function">
                     <c:forEach items="${sessionScope.data}" var="c">
@@ -66,18 +78,14 @@
                                 <div style="margin-top: 5px; height: 10px; width: 10px; border-radius: 50%; background-color: ${c.color}"></div>
                                 <a href="projectcheck?id=${c.id}" style="margin-left: 10px;">${c.name}</a>
                             </div>
-                            <div class="funtion-btn">
-                                <i class="fa-solid fa-ellipsis" style="margin-right: 12px"></i>
-                                <div class="sub-function">
-                                    <a href="updateproject?id=${c.id}">Edit Project</a>
-                                    <a href="" onclick="onDelete(${c.id})">Delete Project</a>
-                                </div>
-                            </div>
+                            <div>
+                                <a href="updateproject?id=${c.id}"><i class="fa-regular fa-pen-to-square"></i></a>
+                                <a href="" onclick="onDelete(${c.id})"><i class="fa-regular fa-trash-can"></i></a>
+                            </div>                            
                         </div>
                     </c:forEach>     
                 </div>          
             </div>
-        </aside>
-
+        </aside>                    
     </body>
 </html>

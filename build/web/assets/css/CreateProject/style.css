@@ -7,3 +7,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : Hp
 */
 
+.theme-background {
+    background-color: var(--ocean-color) !important;
+    box-shadow: 3px 3px 8px var(--yellow-color) !important;
+}

@@ -25,6 +25,9 @@
                     window.location = "deleteproject?id=" + id;
                 }
             }
+            function deleteTask(id) {
+                window.location = "deletetask?id=" + id;
+            }
         </script>
     </head>
     <body>
@@ -48,14 +51,20 @@
                 <div class="content">                    
                     <c:forEach items="${requestScope.task}" var="t">
                         <div class="task">
-                            <input type="checkbox" name="" id=""> 
-                            <p>${t.name}</p>
-                            <a href="deletetask?id=${t.id}"><i class="fa-regular fa-trash-can"></i></a>
-                            <a href="updatetask?id=${t.id}"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a href=""><i class="fa-regular fa-comment"></i></a>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <input type="checkbox" name="" id="" onclick="deleteTask(${t.id})"> 
+                                    <p>${t.name}</p>
+                                </div>
+                                <div>
+                                    <a href="deletetask?id=${t.id}"><i class="fa-regular fa-trash-can"></i></a>
+                                    <a href="updatetask?id=${t.id}"><i class="fa-regular fa-pen-to-square"></i></a>
+                                    <a href=""><i class="fa-regular fa-comment"></i></a>
+                                </div>
+                            </div>
                             <c:if test="${(t.dueDate!=null)}">
                                 <a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i>${t.dueDate}</a>
-                            </c:if>
+                                </c:if>
 
                         </div>
                         <hr>

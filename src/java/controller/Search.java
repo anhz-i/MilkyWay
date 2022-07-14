@@ -14,12 +14,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Project;
 import model.Section;
 import model.Task;
+import model.User;
 
 /**
  *
@@ -39,40 +41,6 @@ public class Search extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-
-        PrintWriter out = response.getWriter();
-        ProjectDAO p = new ProjectDAO();
-        SectionDAO s = new SectionDAO();
-        TaskDAO t = new TaskDAO();
-
-        String name = request.getParameter("txt");
-        try {
-            List<Project> project = p.searchProjectbyName(name);
-            List<Section> section = s.searchSectionbyName(name);
-            List<Task> task = t.searchTaskbyName(name);
-            for (Project ip : project) {
-                out.print("<div class=\"task\">\n"
-                        + "                            <a href=\"\">" + ip.getName() + "</a>\n"
-                        + "                        </div>\n"
-                        + "                        <hr>");
-            }
-            for (Section is : section) {
-                out.print("<div class=\"task\">\n"
-                        + "                            <a href=\"\">" + is.getName() + "</a>\n"
-                        + "                        </div>\n"
-                        + "                        <hr>");
-            }
-            for (Task it : task) {
-                out.print("<div class=\"task\">\n"
-                        + "                            <a href=\"\">" + it.getName() + "</a>\n"
-                        + "                        </div>\n"
-                        + "                        <hr>");
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
     }
 
@@ -88,7 +56,7 @@ public class Search extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("view/Search.jsp").forward(request, response);
     }
 
     /**
@@ -102,7 +70,45 @@ public class Search extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+
+        PrintWriter out = response.getWriter();
+        ProjectDAO p = new ProjectDAO();
+        SectionDAO s = new SectionDAO();
+        TaskDAO t = new TaskDAO();
+
+        String name = request.getParameter("txt");
+        try {
+            HttpSession session = request.getSession();
+            User u = (User) session.getAttribute("user");
+            List<Project> project = p.searchProjectbyName(name, u.getEmail());
+            List<Section> section = s.searchSectionbyName(name, u.getEmail());
+            List<Task> task = t.searchTaskbyName(name, u.getEmail());
+            for (Project ip : project) {
+                out.print("<div class=\"task\">\n"
+                        + "<a href=\"projectcheck?id=" +ip.getId() +"\">" + ip.getName() + "</a>\n"
+                        + "<i style=\"color:grey;\">Project</i>"
+                        + "                        </div>\n"
+                        + "                        <hr>");
+            }
+            for (Section is : section) {
+                out.print("<div class=\"task\">\n"
+                        + "<a href=\"projectcheck?id=" +is.getProjectID() +"\">" + is.getName() + "</a>\n"
+                        + "<i style=\"color:grey;\">Section</i>"
+                        + "                        </div>\n"
+                        + "                        <hr>");
+            }
+            for (Task it : task) {
+                out.print("<div class=\"task\">\n"
+                        + "<a href=\"projectcheck?id=" +it.getProjectID() +"\">" + it.getName() + "</a>\n"
+                        + "<i style=\"color:grey;\">Task</i>"
+                        + "                        </div>\n"
+                        + "                        <hr>");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

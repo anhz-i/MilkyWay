@@ -62,13 +62,14 @@ public class ProjectDAO {
         return ar;
     }
     
-    public List<Project> searchProjectbyName(String name) throws Exception {
-        String sql = "select * from Projects where [name] like ?";
+    public List<Project> searchProjectbyName(String name, String email) throws Exception {
+        String sql = "select * from Projects where [name] like ? and UserEmail=?";
         ArrayList<Project> ar = new ArrayList<>();
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%"+name+"%");
+            ps.setString(2, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ar.add(new Project(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));                
@@ -150,9 +151,6 @@ public class ProjectDAO {
             System.out.println(". " + item.getName());
         }
         
-        List<Project> l1 = p.searchProjectbyName("d");
-        for (Project ip : l1) {
-            System.out.println("2."+ip.getName());
-        }
+        
     }
 }

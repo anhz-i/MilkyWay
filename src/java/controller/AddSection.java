@@ -21,7 +21,6 @@ import java.util.logging.Logger;
  *
  * @author Hp
  */
-@WebServlet(name = "AddSection", urlPatterns = {"/addsection"})
 public class AddSection extends HttpServlet {
 
     /**

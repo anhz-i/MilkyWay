@@ -19,11 +19,29 @@
         <link rel="stylesheet" href="<c:url value="/assets/css/inbox/style.css"/>">
         <link rel="stylesheet" href="<c:url value="/assets/css/inbox/responsive.css"/>">
         <script src="https://kit.fontawesome.com/4d809b9711.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript">
             function onDelete(id) {
                 if (confirm("Are you sure to delete?")) {
                     window.location = "deleteproject?id=" + id;
                 }
+            }
+            function search(param) {
+                var txtSearch = param.value;
+                $.ajax({
+                    url: "/FinalProject/search",
+                    type: "post",
+                    data: {
+                        txt: txtSearch
+                    },
+                    success: function (data) {
+                        var content = document.getElementById("content");
+                        content.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        console.log("error");
+                    }
+                });
             }
         </script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -48,7 +66,7 @@
                 <hr>
                 <input oninput="search(this)" type="text" name="txt" placeholder="Search" >
 
-                <div class="content">                                        
+                <div class="content" id="content">                                        
                     <div class="task">
                         <p>hhh</p>
                     </div>
@@ -57,25 +75,6 @@
             </section>
             <div class="clear"></div>
         </main>        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-            function search(param) {
-                var txtSearch = param.value;
-                $.ajax({
-                    url: "/FinalProject/search",
-                    type: "get",
-                    data: {
-                        txt: txtSearch
-                    },
-                    success: function (data) {
-                        var content = document.getElementsByClassName("content");
-                        content.innerHTML = "123";
-                    },
-                    error: function (xhr) {
-                        console.log("error");
-                    }
-                });
-            }
-        </script>
+
     </body>
 </html>

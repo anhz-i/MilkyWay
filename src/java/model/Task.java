@@ -12,12 +12,12 @@ public class Task {
     private int id;
     private String name, startDate, dueDate, description;
     private int priority;
-    private String sectionID, projectID;    
+    private String sectionID, projectID, userID;    
 
     public Task() {
     }
 
-    public Task(int id, String name, String startDate, String dueDate, String description, int priority, String sectionID, String projectID) {
+    public Task(int id, String name, String startDate, String dueDate, String description, int priority, String sectionID, String projectID, String userID) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -26,7 +26,10 @@ public class Task {
         this.priority = priority;
         this.sectionID = sectionID;
         this.projectID = projectID;
+        this.userID = userID;
     }
+
+    
 
     public int getId() {
         return id;
@@ -92,5 +95,14 @@ public class Task {
         this.projectID = projectID;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+    
+    
             
 }

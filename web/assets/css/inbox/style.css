@@ -24,7 +24,7 @@ i {
 
 header {
     padding: 5px 20px 0;
-    display: flex;
+    display: flex !important;
     justify-content: space-between;
     align-content: center;
     font-size: 18px;
@@ -51,6 +51,11 @@ header i {
 header img {
     transform: translateY(-10%);
 }
+
+header .pro:hover #account-manage {
+    display: block;
+}
+
 
 main {
     width: 100%;
@@ -155,6 +160,10 @@ section .title h3 {
     font-weight: 700;
 }
 
+section .content {
+    margin-bottom: 10px;
+}
+
 section .content hr {
     margin: 5px;
 }
@@ -170,7 +179,7 @@ section .content input {
 }
 
 section .content .task {
-    padding: 3px 0;
+    padding: 5px 0;
 }
 
 section .calendar {

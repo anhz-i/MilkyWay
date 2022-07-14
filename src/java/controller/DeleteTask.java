@@ -41,7 +41,6 @@ public class DeleteTask extends HttpServlet {
             t.Delete(Integer.parseInt(id));
             if (task.getProjectID() == null) {
                 response.sendRedirect("project");
-
             } else {
                 response.sendRedirect("projectcheck?id=" + task.getProjectID());                
             }

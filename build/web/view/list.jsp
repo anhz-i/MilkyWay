@@ -44,10 +44,13 @@
                         <h3>${requestScope.project.name}</h3>                        
                     </div>
                     <div>
-                        <a href="" title="comment"><i class="fa-solid fa-comment"></i></a>
+                        <a href="addcomment?projectid=${requestScope.project.id}" title="comment"><i class="fa-solid fa-comment"></i></a>
                         <a href="" title="views"><i class="fa-solid fa-bars-staggered"></i></a>
                     </div>
 
+                </div>
+                <div>
+                    <a href="addsection?projectid=${requestScope.project.id}" title="Add Section"><i class="fa-solid fa-plus"></i>Add Section</a>                                        
                 </div>
                 <div>
                     <a href="addtask?projectid=${requestScope.project.id}" title="Add Task"><i class="fa-solid fa-plus"></i>Ask Task</a>                    
@@ -63,12 +66,18 @@
                             if (itask.getSectionID() == null) {
                     %>
                     <div class="task">
-                        <input type="checkbox" name="" id=""> 
-                        <p><%=itask.getName()%></p>    
-                        <a href="deletetask?id=<%=itask.getId()%>"><i class="fa-regular fa-trash-can"></i></a>
-                        <a href="updatetask?id=<%=itask.getId()%>"><i class="fa-regular fa-pen-to-square"></i></a>
-                        <a href=""><i class="fa-regular fa-comment"></i></a>
-                            <% if (itask.getDueDate() != null) {%>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <input type="checkbox" name="" id=""> 
+                                <p><%=itask.getName()%></p>    
+                            </div>
+                            <div>
+                                <a href="deletetask?id=<%=itask.getId()%>"><i class="fa-regular fa-trash-can"></i></a>
+                                <a href="updatetask?id=<%=itask.getId()%>"><i class="fa-regular fa-pen-to-square"></i></a>
+                                <a href=""><i class="fa-regular fa-comment"></i></a>                                
+                            </div>
+                        </div>
+                        <% if (itask.getDueDate() != null) {%>
                         <a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i><%=itask.getDueDate()%></a>                       
                             <% } %>                        
                     </div>
@@ -80,31 +89,39 @@
                     }
                     %>                 
 
-                </div>         
-                <div>
-                    <a href="addsection?projectid=${requestScope.project.id}" title="Add Section"><i class="fa-solid fa-plus"></i>Add Section</a>                                        
-                </div>
-                <hr>
+                </div>                                         
                 <div class="content">
                     <%
                     List<Section> section = (List<Section>) request.getAttribute("section");
                     for (Section item : section) {
                     %>
-                    <h3><%=item.getName()%></h3>
-                    <a href="deletesection?id=<%=item.getId()%>"><i class="fa-regular fa-trash-can"></i></a>
-                    <a href="updatesection?id=<%=item.getId()%>"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <h3><%=item.getName()%></h3>
+                        </div>
+                        <div>
+                            <a href="deletesection?id=<%=item.getId()%>"><i class="fa-regular fa-trash-can"></i></a>
+                            <a href="updatesection?id=<%=item.getId()%>"><i class="fa-regular fa-pen-to-square"></i></a>
+                        </div>
+                    </div>
                     <%
                         try {
                             List<Task> task = t.getTaskbySectionID(item.getId());
                             for (Task itask : task) {
                     %>
                     <div class="task">
-                        <input type="checkbox" name="" id=""> 
-                        <p><%=itask.getName()%></p>
-                        <a href="deletetask?id=<%=itask.getId()%>"><i class="fa-regular fa-trash-can"></i></a>
-                        <a href="updatetask?id=<%=itask.getId()%>"><i class="fa-regular fa-pen-to-square"></i></a>
-                        <a href=""><i class="fa-regular fa-comment"></i></a>
-                            <% if (itask.getDueDate() != null) {%>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <input type="checkbox" name="" id=""> 
+                                <p><%=itask.getName()%></p>
+                            </div>
+                            <div>
+                                <a href="deletetask?id=<%=itask.getId()%>"><i class="fa-regular fa-trash-can"></i></a>
+                                <a href="updatetask?id=<%=itask.getId()%>"><i class="fa-regular fa-pen-to-square"></i></a>
+                                <a href=""><i class="fa-regular fa-comment"></i></a>
+                            </div>
+                        </div>
+                        <% if (itask.getDueDate() != null) {%>
                         <a href="" class="calendar"><i class="fa-solid fa-calendar-days"></i><%=itask.getDueDate()%></a>                       
                             <% } %>  
                     </div>

@@ -12,9 +12,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.User;
 
 /**
  *
@@ -102,7 +104,9 @@ public class AddTask extends HttpServlet {
             if (proid.isEmpty()) {
                 proid = null;
             }
-            t.Insert(id, name, startdate, duedate, description, Integer.parseInt(priority), secid, proid);
+            HttpSession session = request.getSession();
+            User u = (User) session.getAttribute("user");
+            t.Insert(id, name, startdate, duedate, description, Integer.parseInt(priority), secid, proid, u.getEmail());
             if (secid == null && proid == null) {
                 response.sendRedirect("project");
             } else {
