@@ -5,6 +5,7 @@
 package controller;
 
 import DAL.CommentDAO;
+import DAL.TaskDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,13 +13,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Comment;
+import model.Task;
 
 /**
  *
  * @author Hp
  */
-@WebServlet(name = "UpdateComment", urlPatterns = {"/updatecomment"})
-public class UpdateComment extends HttpServlet {
+@WebServlet(name = "DeleteComment", urlPatterns = {"/deletecomment"})
+public class DeleteComment extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,18 +37,15 @@ public class UpdateComment extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UpdateComment</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UpdateComment at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String id = request.getParameter("id");
+        CommentDAO c = new CommentDAO();
+        try {
+            c.Delete(Integer.parseInt(id));
+            response.sendRedirect("addcomment?projectid=" + request.getSession().getAttribute("projectid"));
+        } catch (Exception ex) {
+            Logger.getLogger(DeleteTask.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,7 +60,7 @@ public class UpdateComment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("addcomment?projectid=" + request.getSession().getAttribute("projectid"));
+        processRequest(request, response);
     }
 
     /**
@@ -72,11 +74,7 @@ public class UpdateComment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String comment = request.getParameter("comment");
-        String id = request.getParameter("id");
-        CommentDAO c = new CommentDAO();
-        c.Update(Integer.parseInt(id), comment);
-        response.sendRedirect("addcomment?projectid=" + request.getSession().getAttribute("projectid"));
+        processRequest(request, response);
     }
 
     /**

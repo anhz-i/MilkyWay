@@ -10,30 +10,53 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+        <title>Milky Way</title>
+        <link rel="icon" type="image/x-icon" href="<c:url value="/assets/image/favicon_io/favicon.ico"/>">                                
+        <link rel="stylesheet" href="<c:url value="/assets/css/inbox/style.css"/>">
+        <link rel="stylesheet" href="<c:url value="/assets/css/inbox/responsive.css"/>">
+        <script src="https://kit.fontawesome.com/4d809b9711.js" crossorigin="anonymous"></script>
+        <script>
+            function UpdateComment(id) {
+                var upcom = document.getElementById("update-comment");
+//                pro.setAttribute('style', 'display: flex');
+                if (upcom.style.display === 'none') {
+                    upcom.style.display = 'block';
+                } else {
+                    upcom.style.display = 'none';
+                }
+            }
+
+        </script>
     </head>
     <body>        
         <h3>Comment</h3>
         <div class="content">
-            <c:forEach items="${requestScope.comment}" var="t">
+            <c:forEach items="${sessionScope.com}" var="t">
                 <div class="task">
                     <div style="">
                         <div>
                             <img id="profile-img" src="<c:url value="/assets/image/logo/1.png"/>" alt="" width="40px" style="border-radius: 50%">                                        
-                            <h4>${t.name}</h4>
+                            <h4>${sessionScope.user.name}</h4>
                             <p>${t.datetime}</p>
                         </div>
-                        <div>
-                            <p>${requestScope.comment.comment}</p>
+                        <div class="comment-des">
+                            <p>${t.comment}</p>
                             <a href="deletecomment?id=${t.id}"><i class="fa-regular fa-trash-can"></i></a>
-                            <a href="updatecomment?id=${t.id}"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <i onclick="UpdateComment(${t.id})" class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
+                        </div>
+                        <div id="update-comment" style="display: none;">
+                            <form action="updatecomment?id=${t.id}" method="post">
+                                <input type="text" name="comment" value="${t.comment}">
+                                <input type="submit" value="Update">
+                            </form>
                         </div>
                     </div>                   
                 </div>                
             </c:forEach>   
         </div>
-        <form action="addcomment?projectid=${requestScope.projectid}" method="post">
+        <form action="addcomment?projectid=${sessionScope.projectid}" method="post">
             <input type="text" name="comment">
             <input type="submit" value="Comment">
         </form>      

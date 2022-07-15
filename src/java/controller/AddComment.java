@@ -12,8 +12,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,15 +55,26 @@ public class AddComment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String projectid = request.getParameter("projectid");
+        String taskid = request.getParameter("taskid");
         CommentDAO c = new CommentDAO();
+        List<Comment> list = new ArrayList<>();
         try {
-            List<Comment> list = c.getCommentbyProjectID(Integer.parseInt(projectid));
-            request.setAttribute("comment", list);
-//            request.setAttribute("projectid", projectid);
-            request.getRequestDispatcher("view/AddComment.jsp").forward(request, response);
+            if (!projectid.isEmpty()) {
+                list = c.getCommentbyProjectID(Integer.parseInt(projectid));
+            }
+            if (!taskid.isEmpty()) {
+                list = c.getCommentbyTaskID(Integer.parseInt(taskid));
+            }
+            HttpSession session = request.getSession();
+            session.setAttribute("projectid", projectid);
+            session.setAttribute("com", list);
+            request.setAttribute("taskid", taskid);
+//            response.sendRedirect("addcomment");
+//            request.getRequestDispatcher("addtask").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(AddComment.class.getName()).log(Level.SEVERE, null, ex);
         }
+        request.getRequestDispatcher("view/AddComment.jsp").forward(request, response);
     }
 
     /**
@@ -77,6 +90,8 @@ public class AddComment extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String projectid = request.getParameter("projectid");
+        String taskid = request.getParameter("taskid");
+
         String comment = request.getParameter("comment");
         CommentDAO c = new CommentDAO();
         int id;
@@ -89,7 +104,14 @@ public class AddComment extends HttpServlet {
             } else {
                 id = c.getAll().get(c.getAll().size() - 1).getId() + 1;
             }
-            c.InsertProjectID(id, comment, date, Integer.parseInt(projectid));
+            if (!projectid.isEmpty()) {
+                c.InsertProjectID(id, comment, date, Integer.parseInt(projectid));
+                response.sendRedirect("addcomment?projectid=" + projectid);
+            }
+            if (!taskid.isEmpty()) {
+                c.InsertTaskID(id, comment, date, Integer.parseInt(taskid));
+                response.sendRedirect("addcomment?taskid=" + taskid);                
+            }
         } catch (Exception ex) {
             Logger.getLogger(AddComment.class.getName()).log(Level.SEVERE, null, ex);
         }

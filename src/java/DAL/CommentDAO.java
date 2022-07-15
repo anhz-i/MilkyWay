@@ -56,9 +56,8 @@ public class CommentDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ar.add(new Comment(rs.getInt(1), rs.getString(2), rs.getString(3)));
-
             }
-        } catch (SQLException e) {
+        } catch (SQLException e) { 
             status = "Error at read account" + e.getMessage();
         }
         return ar;
@@ -112,6 +111,21 @@ public class CommentDAO {
             status = "Error at Insert Student" + e.getMessage();
         }
     }
+    
+    public void InsertTaskID(int id, String comment, String date, int taskid) {
+        String sql = "insert into Comments values(?,?,?) insert into TaskComment values(?,?)"; //insert database                
+        try {            
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setString(2, comment);
+            ps.setString(3, date);
+            ps.setInt(4, taskid);
+            ps.setInt(5, id);            
+            ps.execute();
+        } catch (Exception e) {
+            status = "Error at Insert Student" + e.getMessage();
+        }
+    }
 
     public void Update(int id, String comment) {
         String sql = "update Comments set comment=? where id=?";
@@ -127,10 +141,11 @@ public class CommentDAO {
     }
 
     public void Delete(int id) {
-        String sql = "delete from Comments where id=?;";
+        String sql = "delete from ProjectComment where CommentID=? delete from Comments where id=?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
+            ps.setInt(2, id);
             ps.execute();
         } catch (SQLException e) {
             status = "Error at delete Comments" + e.getMessage();

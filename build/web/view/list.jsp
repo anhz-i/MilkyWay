@@ -74,7 +74,7 @@
                             <div>
                                 <a href="deletetask?id=<%=itask.getId()%>"><i class="fa-regular fa-trash-can"></i></a>
                                 <a href="updatetask?id=<%=itask.getId()%>"><i class="fa-regular fa-pen-to-square"></i></a>
-                                <a href=""><i class="fa-regular fa-comment"></i></a>                                
+                                <a href="addcomment?taskid=<%=itask.getId()%>"><i class="fa-regular fa-comment"></i></a>                                
                             </div>
                         </div>
                         <% if (itask.getDueDate() != null) {%>

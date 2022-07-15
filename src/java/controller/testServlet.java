@@ -4,6 +4,7 @@
  */
 package controller;
 
+import DAL.CommentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Comment;
 
 /**
  *
@@ -57,10 +62,16 @@ public class testServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String pass = request.getParameter("password");
-        PrintWriter out = response.getWriter();
-        out.println(email);
+        String projectid = request.getParameter("projectid");
+        CommentDAO c = new CommentDAO();
+        try {
+            List<Comment> list = c.getCommentbyProjectID(Integer.parseInt(projectid));
+            request.setAttribute("comment", list);
+            request.setAttribute("projectid", projectid);
+            request.getRequestDispatcher("view/AddComment.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(AddComment.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
