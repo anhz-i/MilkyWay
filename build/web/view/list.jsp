@@ -45,7 +45,6 @@
                     </div>
                     <div>
                         <a href="addcomment?projectid=${requestScope.project.id}" title="comment"><i class="fa-solid fa-comment"></i></a>
-                        <a href="" title="views"><i class="fa-solid fa-bars-staggered"></i></a>
                     </div>
 
                 </div>

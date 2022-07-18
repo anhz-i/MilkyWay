@@ -1,29 +1,31 @@
-package controller;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-import DAL.UserDAO;
+package controller;
+
+import DAL.ProjectDAO;
+import DAL.SendEmail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Project;
 import model.User;
 
 /**
  *
  * @author Hp
  */
-@WebServlet(urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "ShareProject", urlPatterns = {"/shareproject"})
+public class ShareProject extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +44,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet ShareProject</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ShareProject at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,11 +66,22 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User us = (User) session.getAttribute("user");
-        if (us != null) {
-            response.sendRedirect("project");
-        } else {
-            request.getRequestDispatcher("view/login.jsp").forward(request, response);
+        String id = request.getParameter("id");
+        ProjectDAO p = new ProjectDAO();
+        Project pro = (Project) session.getAttribute("project");
+        List<String> listemail;
+        try {
+            if (pro == null) {
+                pro = p.getProject(Integer.parseInt(id));
+                session.setAttribute("project", pro);
+                listemail = p.getEmailPermission(Integer.parseInt(id));
+            } else {
+                listemail = p.getEmailPermission(pro.getId());
+            }
+            request.setAttribute("shareemail", listemail);
+            request.getRequestDispatcher("view/ShareProject.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ShareProject.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -83,35 +96,26 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Project pro = (Project) session.getAttribute("project");
+        User user = (User) session.getAttribute("user");
+        ProjectDAO p = new ProjectDAO();
         String email = request.getParameter("email");
-        String pass = request.getParameter("pass");
-
-        if (!Character.isLetter(email.charAt(email.length() - 1))) {
-            request.setAttribute("error", "Error Login!");
-            request.getRequestDispatcher("view/login.jsp").forward(request, response);
-
-        }
-        UserDAO u = new UserDAO();
-        User user;
-        try {
-            user = u.getUser(email, pass);
-            if (user == null) {
-                request.setAttribute("error", "Email or password is incorrect!");
-                request.getRequestDispatcher("view/login.jsp").forward(request, response);
-
-            } else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-//                Cookie e = new Cookie("emailC", email);
-//                Cookie p = new Cookie("passC", pass);
-//                e.setMaxAge(60 * 60 * 24 * 7);
-//                p.setMaxAge(60 * 60 * 24 * 7);
-//                response.addCookie(e);
-//                response.addCookie(p);
-                response.sendRedirect("project");
+        List<String> listemail = p.getEmailPermission(pro.getId());
+        int kt=0;
+        for (String item : listemail) {
+            if (item.trim().equals(email.trim())) {
+                request.setAttribute("mes", "Email existed!");
+                kt = 1;
+                request.getRequestDispatcher("view/ShareProject.jsp").forward(request, response);
+//                request.getRequestDispatcher("shareproject?id=" + pro.getId()).forward(request, response);
+        
             }
-        } catch (Exception ex) {
-            Logger.getLogger(SignupServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (kt == 0) {            
+            SendEmail.send(email.trim(), "Share Project", user.getEmail() + " share " + pro.getName().toUpperCase() + " project with you<br>" + "<a href=\"http://localhost:9999/FinalProject/project\">Visit project</a>", "vannths160268@fpt.edu.vn", "iwillgowhenfirstsnow");
+            p.ProjectShare(email, pro.getId());
+            response.sendRedirect("shareproject");
         }
 
     }

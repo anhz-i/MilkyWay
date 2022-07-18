@@ -101,7 +101,7 @@ public class SignupServlet extends HttpServlet {
             //craete new user using all information
             User user = new User(null, email, pass, code);
 
-            SendEmail.send(email, "Verify your account", "Your code to verify account: " + code, "anhkthhe160643@fpt.edu.vn", "Kkkkk1312@");
+            SendEmail.send(email, "Verify your account", "Your code to verify account: " + code, "vannths160268@fpt.edu.vn", "iwillgowhenfirstsnow");
 
             //check if the email send successfully                
             HttpSession session = request.getSession();

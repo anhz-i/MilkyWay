@@ -11,6 +11,8 @@ import model.Project;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -46,33 +48,51 @@ public class ProjectDAO {
     }
 
     public List<Project> getProjectbyEmail(String email) throws Exception {
-        String sql = "select * from Projects where UserEmail=?";
+        String sql = "select * from Projects where UserEmail=? or id in (select ProjectID from Permission where email = ?)";
         ArrayList<Project> ar = new ArrayList<>();
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, email);
+            ps.setString(2, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                ar.add(new Project(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));                
+                ar.add(new Project(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
             }
         } catch (SQLException e) {
             status = "Error at read account" + e.getMessage();
         }
         return ar;
     }
-    
+
+    public List<String> getEmailPermission(int id) {
+        ArrayList<String> ar = new ArrayList<>();
+        String sql = "select email from Permission where ProjectID = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ar.add(rs.getString(1));                
+            }
+        } catch (SQLException e) {
+            status = "Error at read account" + e.getMessage();
+        }
+        return ar;
+    }
+
     public List<Project> searchProjectbyName(String name, String email) throws Exception {
         String sql = "select * from Projects where [name] like ? and UserEmail=?";
         ArrayList<Project> ar = new ArrayList<>();
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, "%"+name+"%");
+            ps.setString(1, "%" + name + "%");
             ps.setString(2, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                ar.add(new Project(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));                
+                ar.add(new Project(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)));
             }
         } catch (SQLException e) {
             status = "Error at read project" + e.getMessage();
@@ -138,6 +158,31 @@ public class ProjectDAO {
         }
     }
 
+    public void ProjectShare(String email, int id) {
+        String sql = "insert into Permission values(?,?)";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setInt(2, id);
+            ps.execute();
+        } catch (Exception ex) {
+            Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    public void DeletePermission(int id, String email) {
+        String sql = "delete from Permission where ProjectID=? and email=?;";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setString(2, email);
+            ps.execute();
+        } catch (SQLException e) {
+            status = "Error at delete Projects" + e.getMessage();
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         ProjectDAO p = new ProjectDAO();
         List<Project> list;
@@ -150,7 +195,6 @@ public class ProjectDAO {
         for (Project item : list) {
             System.out.println(". " + item.getName());
         }
-        
-        
+
     }
 }

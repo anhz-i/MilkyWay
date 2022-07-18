@@ -12,9 +12,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Project;
+import model.User;
 
 /**
  *
@@ -36,15 +39,31 @@ public class ProjectCheck extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String id = request.getParameter("id");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
         ProjectDAO p = new ProjectDAO();
+        int check = 0;
         try {
             Project project = p.getProject(Integer.parseInt(id));
-            if (project.getView().trim().equals("list")) {
-//                response.sendRedirect("projectlist?id=" + id);
-                request.getRequestDispatcher("projectlist?id=" + id).forward(request, response);
-            } else {
-                request.getRequestDispatcher("view/board.jsp").forward(request, response);
+            if (project.getEmail() == null) {
+                response.sendRedirect("project");
             }
+            List<String> listemail = p.getEmailPermission(Integer.parseInt(id));
+            for (String item : listemail) {
+                if ( item.trim().equals(user.getEmail().trim())) {
+                    check = 1;
+                }
+            }
+            if (project.getEmail().trim().equals(user.getEmail().trim()) || check == 1) {
+//                if (project.getView().trim().equals("list")) {
+//                response.sendRedirect("projectlist?id=" + id);
+                    request.getRequestDispatcher("projectlist?id=" + id).forward(request, response);
+//                } else {
+//                    request.getRequestDispatcher("view/board.jsp").forward(request, response);
+//                }
+            }
+//            request.getRequestDispatcher("project").forward(request, response);
+
         } catch (Exception ex) {
             Logger.getLogger(ProjectCheck.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import model.Task;
 import model.User;
 
 /**
@@ -26,6 +29,22 @@ public class UserDAO {
             System.out.println(e);
         }
 
+    }
+
+    public List<User> getAll() throws Exception {
+        ArrayList<User> ar = new ArrayList<>();
+        String sql = "select * from [User]";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ar.add(new User(rs.getString(2), rs.getString(3)));
+
+            }
+        } catch (SQLException e) {
+            status = "Error at read account" + e.getMessage();
+        }
+        return ar;
     }
 
     public User getUserbyEmail(String email) throws Exception {
@@ -105,11 +124,20 @@ public class UserDAO {
 
     public static void main(String[] args) throws Exception {
         UserDAO u = new UserDAO();
-        u.Insert("anhkthhe160643@fpt.edu.vn", "123");
-//        u.Delete("anhnapu2002@gmail.com");
-        User user = u.getUserbyEmail("anhnapu2002@gmail.com");
-        u.Update(user.getName(), user.getEmail(), "456");
-        user = u.getUserbyEmail("anhkthhe160643@fpt.edu.vn");
-        System.out.println(user.getPassword());
+        u.Insert("anhkthhe@gmail.com", "123");
+////        u.Delete("anhnapu2002@gmail.com");
+//        User user = u.getUserbyEmail("anhnapu2002@gmail.com");
+//        u.Update(user.getName(), user.getEmail(), "456");
+//        user = u.getUserbyEmail("anhkthhe160643@fpt.edu.vn");
+//        System.out.println(user.getPassword());
+        List<User> listu = u.getAll();
+        for (User user : listu) {
+            System.out.println(user.getEmail());
+        }
+//       u.Delete("anhkthhe@gmail.com");
+//       listu = u.getAll();
+//        for (User user : listu) {
+//            System.out.println(user.getEmail());
+//        }
     }
 }

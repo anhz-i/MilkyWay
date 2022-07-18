@@ -22,9 +22,25 @@
             function showprofile() {
                 var pro = document.getElementById("account-manage");
 //                pro.setAttribute('style', 'display: flex');
-                pro.style.display = 'block';
+                if (pro.style.display === 'none') {
+                    pro.style.display = 'block';
+                } else {
+                    pro.style.display = 'none';
+                }
             }
-
+            function confirmDeleteAccount() {
+                if (confirm("Are you sure to delete account?")) {
+                    window.location = "deleteuser";
+                }
+            }
+            function showCRUD(id) {
+                var btn = document.getElementById("crud-btn-"+id);
+                if (btn.style.display === 'none') {
+                    btn.style.display = 'flex';
+                } else {
+                    btn.style.display = 'none';
+                }
+            }
         </script>
     </head>
     <body>        
@@ -38,13 +54,14 @@
             <div style="display: flex; align-items: center">
                 <a href="" title="Add Task"><i class="fa-solid fa-plus"></i></a>                
                 <div class="pro">
-                    <img id="profile-img" src="<c:url value="/assets/image/logo/1.png"/>" alt="" width="40px">                                        
+                    <img id="profile-img" onclick="showprofile()" style="cursor: pointer;" src="<c:url value="/assets/image/logo/1.png"/>" alt="" width="40px">                                        
                     <div id="account-manage" style="background-color: white; padding: 20px; border-radius: 6px; box-shadow: 3px 3px 3px #ccc; display: none; position: absolute; width: 150px; right: 0;">
                         <a href="updateaccount">Edit Account</a>
                         <form action="logout">
                             <input type="submit" value="Log out" style="background: none; border: none;">
                         </form>
                         <!--<a href="logout">Log out</a>-->
+                        <a href="deleteuser">Delete Account</a>
                     </div>
                 </div>                
 
@@ -73,14 +90,17 @@
                 </div>
                 <div class="extra-function">
                     <c:forEach items="${sessionScope.data}" var="c">
-                        <div class="project-ele">
+                        <div class="project-ele" onmouseover="showCRUD(${c.id})" onmouseout="showCRUD(${c.id})">
                             <div style="display: flex; align-content: center; margin-left: 10px;">
                                 <div style="margin-top: 5px; height: 10px; width: 10px; border-radius: 50%; background-color: ${c.color}"></div>
                                 <a href="projectcheck?id=${c.id}" style="margin-left: 10px;">${c.name}</a>
                             </div>
-                            <div>
+                                <div id="crud-btn-${c.id}" style="display: none;"> 
                                 <a href="updateproject?id=${c.id}"><i class="fa-regular fa-pen-to-square"></i></a>
-                                <a href="" onclick="onDelete(${c.id})"><i class="fa-regular fa-trash-can"></i></a>
+                                    <c:if test="${c.email eq sessionScope.user.email}">
+                                    <a href="" onclick="onDelete(${c.id})"><i class="fa-regular fa-trash-can"></i></a>
+                                    </c:if>
+                                <a href="shareproject?id=${c.id}"><i class="fa-regular fa-share-from-square"></i></a>
                             </div>                            
                         </div>
                     </c:forEach>     

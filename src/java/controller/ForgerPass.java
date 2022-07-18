@@ -47,7 +47,7 @@ public class ForgerPass extends HttpServlet {
         //craete new user using all information
         User user = new User(null, u.getEmail(), u.getPassword(), code);
 
-        SendEmail.send(u.getEmail(), "Verify your account", "Your code to verify account: " + code, "anhkthhe160643@fpt.edu.vn", "Kkkkk1312@");
+        SendEmail.send(u.getEmail(), "Verify your account", "Your code to verify account: " + code, "vannths160268@fpt.edu.vn", "iwillgowhenfirstsnow");
         session.setAttribute("authuser", user);
         request.setAttribute("mes", "Check your Mail!");
         response.sendRedirect("verifyaccount");

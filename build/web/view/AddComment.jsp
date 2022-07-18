@@ -19,7 +19,7 @@
         <script src="https://kit.fontawesome.com/4d809b9711.js" crossorigin="anonymous"></script>
         <script>
             function UpdateComment(id) {
-                var upcom = document.getElementById("update-comment");
+                var upcom = document.getElementById("update-comment-"+id);
 //                pro.setAttribute('style', 'display: flex');
                 if (upcom.style.display === 'none') {
                     upcom.style.display = 'block';
@@ -46,7 +46,7 @@
                             <a href="deletecomment?id=${t.id}"><i class="fa-regular fa-trash-can"></i></a>
                             <i onclick="UpdateComment(${t.id})" class="fa-regular fa-pen-to-square" style="cursor: pointer;"></i>
                         </div>
-                        <div id="update-comment" style="display: none;">
+                        <div id="update-comment-${t.id}" style="display: none;">
                             <form action="updatecomment?id=${t.id}" method="post">
                                 <input type="text" name="comment" value="${t.comment}">
                                 <input type="submit" value="Update">

@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/DAL/CommentDAO.java</file>
             <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/controller/AddComment.java</file>
+            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/DAL/CommentDAO.java</file>
             <file>file:/E:/LearningSpace/JavaWeb/FinalProject/web/view/list.jsp</file>
-            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/controller/UpdateComment.java</file>
+            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/DAL/UserDAO.java</file>
             <file>file:/E:/LearningSpace/JavaWeb/FinalProject/web/view/AddComment.jsp</file>
-            <file>file:/E:/LearningSpace/JavaWeb/FinalProject/src/java/controller/UpdateTask.java</file>
         </group>
     </open-files>
 </project-private>

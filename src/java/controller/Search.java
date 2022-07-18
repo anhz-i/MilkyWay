@@ -87,24 +87,32 @@ public class Search extends HttpServlet {
             List<Task> task = t.searchTaskbyName(name, u.getEmail());
             for (Project ip : project) {
                 out.print("<div class=\"task\">\n"
-                        + "<a href=\"projectcheck?id=" +ip.getId() +"\">" + ip.getName() + "</a>\n"
+                        + "<a href=\"projectcheck?id=" + ip.getId() + "\">" + ip.getName() + "</a>\n"
                         + "<i style=\"color:grey;\">Project</i>"
                         + "                        </div>\n"
                         + "                        <hr>");
             }
             for (Section is : section) {
                 out.print("<div class=\"task\">\n"
-                        + "<a href=\"projectcheck?id=" +is.getProjectID() +"\">" + is.getName() + "</a>\n"
+                        + "<a href=\"projectcheck?id=" + is.getProjectID() + "\">" + is.getName() + "</a>\n"
                         + "<i style=\"color:grey;\">Section</i>"
                         + "                        </div>\n"
                         + "                        <hr>");
             }
             for (Task it : task) {
-                out.print("<div class=\"task\">\n"
-                        + "<a href=\"projectcheck?id=" +it.getProjectID() +"\">" + it.getName() + "</a>\n"
-                        + "<i style=\"color:grey;\">Task</i>"
-                        + "                        </div>\n"
-                        + "                        <hr>");
+                if (it.getProjectID() == null) {
+                    out.print("<div class=\"task\">\n"
+                            + "<a href=\"project\">" + it.getName() + "</a>\n"
+                            + "<i style=\"color:grey;\">Task</i>"
+                            + "                        </div>\n"
+                            + "                        <hr>");
+                } else {
+                    out.print("<div class=\"task\">\n"
+                            + "<a href=\"projectcheck?id=" + it.getProjectID() + "\">" + it.getName() + "</a>\n"
+                            + "<i style=\"color:grey;\">Task</i>"
+                            + "                        </div>\n"
+                            + "                        <hr>");
+                }
             }
         } catch (Exception ex) {
             Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);

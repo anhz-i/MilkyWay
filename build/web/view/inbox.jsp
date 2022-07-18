@@ -28,6 +28,15 @@
             function deleteTask(id) {
                 window.location = "deletetask?id=" + id;
             }
+            function showView() {
+                var sort = document.getElementById("sort");
+//                pro.setAttribute('style', 'display: flex');
+                if (sort.style.display === 'none') {
+                    sort.style.display = 'flex';
+                } else {
+                    sort.style.display = 'none';
+                }
+            }
         </script>
     </head>
     <body>
@@ -42,8 +51,11 @@
                         <h3>Inbox</h3>
                     </div>
                     <div>
-                        <a href="" title="comment"><i class="fa-solid fa-comment"></i></a>
-                        <a href="" title="views"><i class="fa-solid fa-bars-staggered"></i></a>
+                        <i onclick="showView()" style="cursor: pointer;" class="fa-solid fa-bars-staggered"></i>
+                        <div id="sort" style="flex-direction: column; background-color: white; padding: 20px; border-radius: 6px; box-shadow: 3px 3px 3px #ccc; display: none; position: absolute; width: 180px; right: 30px;">
+                            <a href="sorttask?sortby=priority">Sort by Priority</a>                            
+                            <a href="sorttask?sortby=duedate">Sort By Due Date</a>
+                        </div>
                     </div>
 
                 </div>

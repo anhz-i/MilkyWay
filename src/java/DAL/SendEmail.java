@@ -81,27 +81,28 @@ public class SendEmail {
     }
 
     public static void main(String[] args) {
-//        String subject = "Your order has been processing.";
-//        String message = "<!DOCTYPE html>\n"
-//                + "<html lang=\"en\">\n"
-//                + "\n"
-//                + "<head>\n"
-//                + "</head>\n"
-//                + "\n"
-//                + "<body>\n"
-//                + "    <h3 style=\"color: blue;\">Your order has been processing.</h3>\n"
-//                + "    <div>Full Name :Le Hong Quan</div>\n"
-//                + "    <div>Phone : 0866823499</div>\n"
-//                + "    <div>address : Vinh Hung, Vinh Loc, Thanh Hoa</div>\n"
-//                + "    <h3 style=\"color: blue;\">Thank you very much!</h3>\n"
-//                + "\n"
-//                + "</body>\n"
-//                + "\n"
-//                + "</html>";
-//        SendEmail.send("anhnapu2002@gmail.com", subject, message, "anhkthhe160643@fpt.edu.vn", "Kkkkk1312@");
+        String subject = "Your order has been processing.";
+        String message = "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n"
+                + "\n"
+                + "<head>\n"
+                + "</head>\n"
+                + "\n"
+                + "<body>\n"
+                + "    <h3 style=\"color: blue;\">Your order has been processing.</h3>\n"
+                + "    <div>Full Name :Le Hong Quan</div>\n"
+                + "    <div>Phone : 0866823499</div>\n"
+                + "    <div>address : Vinh Hung, Vinh Loc, Thanh Hoa</div>\n"
+                + "    <h3 style=\"color: blue;\">Thank you very much!</h3>\n"
+                + "\n"
+                + "</body>\n"
+                + "\n"
+                + "</html>";
+        SendEmail.send("anhnapu2002@gmail.com", subject, message, "honganhtestmail@gmail.com", "Kkkkk1312@");
 //        //vd để gửi email tới "dich@gmail.com" bằng email "nguon@gmail.com" pass "123456"
 ////        SendMail.send("dich@gmail.com", subject, message, "nguon@gmail.com", "123456");
 
 //        System.out.println(SendEmail.getRamdomString());
+        SendEmail.send("anhkhong.work@gmail.com", "Share Project", " share  project with you<br>" + "<a href=\"http://localhost:9999/FinalProject/project\">Visit project</a>", "honganhtestmail@gmail.com", "Kkkkk1312@");
     }
 }

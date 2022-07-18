@@ -99,7 +99,7 @@ public class TaskDAO {
         }
         return ar;
     }
-    
+
     public List<Task> getTaskbyUserEmail(String email) throws Exception {
         String sql = "select * from Tasks where UserEmail=?";
         ArrayList<Task> ar = new ArrayList<>();
@@ -125,7 +125,7 @@ public class TaskDAO {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + name + "%");
-            ps.setString(2, email);            
+            ps.setString(2, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ar.add(new Task(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9)));
@@ -135,7 +135,7 @@ public class TaskDAO {
         }
         return ar;
     }
-    
+
     public List<Task> searchTaskbyDueDate(String dueDate, String email) throws Exception {
         String sql = "select * from Tasks where DueDate = ? and UserEmail=?";
         ArrayList<Task> ar = new ArrayList<>();
@@ -143,7 +143,7 @@ public class TaskDAO {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, dueDate);
-            ps.setString(2, email);            
+            ps.setString(2, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ar.add(new Task(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9)));
@@ -153,15 +153,15 @@ public class TaskDAO {
         }
         return ar;
     }
-    
-    public List<Task> getTaskOverdate (String dueDate, String email) throws Exception {
+
+    public List<Task> getTaskOverdate(String dueDate, String email) throws Exception {
         String sql = "select * from Tasks where DueDate < ? and UserEmail=? order by DueDate desc";
         ArrayList<Task> ar = new ArrayList<>();
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, dueDate);
-            ps.setString(2, email);            
+            ps.setString(2, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ar.add(new Task(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9)));
@@ -171,7 +171,7 @@ public class TaskDAO {
         }
         return ar;
     }
-    
+
     public List<Task> getTaskUpcoming(String dueDate, String email) throws Exception {
         String sql = "select * from Tasks where DueDate > ? or DueDate is null and UserEmail=? order by DueDate desc";
         ArrayList<Task> ar = new ArrayList<>();
@@ -179,7 +179,7 @@ public class TaskDAO {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, dueDate);
-            ps.setString(2, email);            
+            ps.setString(2, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ar.add(new Task(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9)));
@@ -204,6 +204,40 @@ public class TaskDAO {
             status = "Error at read account" + e.getMessage();
         }
         return null;
+    }
+
+    public List<Task> TaskSortByPriority(String email) {
+        String sql = "select * from Tasks where UserEmail=? order by priority ";
+        ArrayList<Task> ar = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ar.add(new Task(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+            }
+        } catch (SQLException e) {
+            status = "Error at read Task" + e.getMessage();
+        }
+        return ar;
+    }
+
+    public List<Task> TaskSortByDueDate(String email) {
+        String sql = "select * from Tasks where UserEmail=? order by DueDate";
+        ArrayList<Task> ar = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ar.add(new Task(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8), rs.getString(9)));
+            }
+        } catch (SQLException e) {
+            status = "Error at read Task" + e.getMessage();
+        }
+        return ar;
     }
 
     public void Insert(int id, String name, String startDate, String dueDate, String description, int priority, String sectionID, String projectID, String UserEmail) {
