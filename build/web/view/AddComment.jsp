@@ -31,6 +31,11 @@
         </script>
     </head>
     <body>        
+        <header>
+            <nav class="" >
+                <a href="project"><img src="<c:url value="/assets/image/logo/2.png"/>" alt="logohome" style="width: 150px;"></a>                
+            </nav>        
+        </header>
         <h3>Comment</h3>
         <div class="content">
             <c:forEach items="${sessionScope.com}" var="t">
@@ -38,7 +43,7 @@
                     <div style="">
                         <div>
                             <img id="profile-img" src="<c:url value="/assets/image/logo/1.png"/>" alt="" width="40px" style="border-radius: 50%">                                        
-                            <h4>${sessionScope.user.name}</h4>
+                            <h4>${t.email}</h4>
                             <p>${t.datetime}</p>
                         </div>
                         <div class="comment-des">

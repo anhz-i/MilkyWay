@@ -34,7 +34,7 @@ public class ProjectDAO {
 
     public List<Project> getAll() throws Exception {
         ArrayList<Project> ar = new ArrayList<>();
-        String sql = "select * from Projects";
+        String sql = "select * from  Projects";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -48,7 +48,7 @@ public class ProjectDAO {
     }
 
     public List<Project> getProjectbyEmail(String email) throws Exception {
-        String sql = "select * from Projects where UserEmail=? or id in (select ProjectID from Permission where email = ?)";
+        String sql = "select * from Projects where UserID=? or id in (select ProjectID from  Permission where email = ?)";
         ArrayList<Project> ar = new ArrayList<>();
 
         try {
@@ -67,7 +67,7 @@ public class ProjectDAO {
 
     public List<String> getEmailPermission(int id) {
         ArrayList<String> ar = new ArrayList<>();
-        String sql = "select email from Permission where ProjectID = ?";
+        String sql = "select email from  Permission where ProjectID = ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -83,7 +83,7 @@ public class ProjectDAO {
     }
 
     public List<Project> searchProjectbyName(String name, String email) throws Exception {
-        String sql = "select * from Projects where [name] like ? and UserEmail=?";
+        String sql = "select * from Projects where [name] like ? and UserID=?";
         ArrayList<Project> ar = new ArrayList<>();
 
         try {

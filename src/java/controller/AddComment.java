@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Comment;
+import model.User;
 
 /**
  *
@@ -59,16 +60,16 @@ public class AddComment extends HttpServlet {
         CommentDAO c = new CommentDAO();
         List<Comment> list = new ArrayList<>();
         try {
-            if (!projectid.isEmpty()) {
                 list = c.getCommentbyProjectID(Integer.parseInt(projectid));
-            }
-            if (!taskid.isEmpty()) {
-                list = c.getCommentbyTaskID(Integer.parseInt(taskid));
-            }
+//            if (!projectid.isEmpty()) {
+//            }
+//            if (!taskid.isEmpty()) {
+//                list = c.getCommentbyTaskID(Integer.parseInt(taskid));
+//            }
             HttpSession session = request.getSession();
             session.setAttribute("projectid", projectid);
             session.setAttribute("com", list);
-            request.setAttribute("taskid", taskid);
+//            request.setAttribute("taskid", taskid);
 //            response.sendRedirect("addcomment");
 //            request.getRequestDispatcher("addtask").forward(request, response);
         } catch (Exception ex) {
@@ -104,8 +105,10 @@ public class AddComment extends HttpServlet {
             } else {
                 id = c.getAll().get(c.getAll().size() - 1).getId() + 1;
             }
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute("user");
             if (!projectid.isEmpty()) {
-                c.InsertProjectID(id, comment, date, Integer.parseInt(projectid));
+                c.InsertProjectID(id, comment, date, user.getEmail(),Integer.parseInt(projectid));
                 response.sendRedirect("addcomment?projectid=" + projectid);
             }
             if (!taskid.isEmpty()) {

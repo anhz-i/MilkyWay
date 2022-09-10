@@ -68,7 +68,7 @@
                     <img src="<c:url value="/assets/image/login/loginmain (2).png"/>" alt="" width="90%">
                 </div>
             </div>
-
+                
         </main>        
     </body>
 </html>

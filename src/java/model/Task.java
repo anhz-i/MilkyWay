@@ -12,24 +12,25 @@ public class Task {
     private int id;
     private String name, startDate, dueDate, description;
     private int priority;
-    private String sectionID, projectID, userID;    
+    private String status, file, image, sectionID, projectID, userID;    
 
     public Task() {
     }
 
-    public Task(int id, String name, String startDate, String dueDate, String description, int priority, String sectionID, String projectID, String userID) {
+    public Task(int id, String name, String startDate, String dueDate, String description, int priority, String status, String file, String image, String sectionID, String projectID, String userID) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.dueDate = dueDate;
         this.description = description;
         this.priority = priority;
+        this.status = status;
+        this.file = file;
+        this.image = image;
         this.sectionID = sectionID;
         this.projectID = projectID;
         this.userID = userID;
     }
-
-    
 
     public int getId() {
         return id;
@@ -79,6 +80,30 @@ public class Task {
         this.priority = priority;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getSectionID() {
         return sectionID;
     }
@@ -102,7 +127,6 @@ public class Task {
     public void setUserID(String userID) {
         this.userID = userID;
     }
-    
-    
-            
+
+                 
 }

@@ -10,15 +10,16 @@ package model;
  */
 public class Comment {
     private int id;
-    private String comment, datetime;
+    private String comment, datetime, email;
 
     public Comment() {
     }
 
-    public Comment(int id, String comment, String datetime) {
+    public Comment(int id, String comment, String datetime, String email) {
         this.id = id;
         this.comment = comment;
         this.datetime = datetime;
+        this.email = email;
     }
 
     public int getId() {
@@ -44,6 +45,15 @@ public class Comment {
     public void setDatetime(String datetime) {
         this.datetime = datetime;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     
     
 }

@@ -32,7 +32,7 @@ public class SectionDAO {
 
     public List<Section> getAll() throws Exception {
         ArrayList<Section> ar = new ArrayList<>();
-        String sql = "select * from Sections";
+        String sql = "select * from  Sections";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -46,7 +46,7 @@ public class SectionDAO {
     }
 
     public List<Section> getSectionbyIDProject(int idPro) throws Exception {
-        String sql = "select * from Sections where ProjectID=?";
+        String sql = "select * from  Sections  where ProjectID=?";
         ArrayList<Section> ar = new ArrayList<>();
 
         try {
@@ -63,7 +63,7 @@ public class SectionDAO {
     }
 
     public List<Section> searchSectionbyName(String name, String email) throws Exception {
-        String sql = "select * from Sections where [name] like ? and UserEmail=?";
+        String sql = "select * from  Sections  where [name] like ? and UserID=?";
         ArrayList<Section> ar = new ArrayList<>();
 
         try {
@@ -81,7 +81,7 @@ public class SectionDAO {
     }
 
     public Section getSectionbyID(int id) throws Exception {
-        String sql = "select * from Sections where id=?";
+        String sql = "select * from  Sections  where id=?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -97,7 +97,7 @@ public class SectionDAO {
     }
 
     public void Insert(int id, String name, String date, int projectID) {
-        String sql = "insert into Sections values(?,?,?,?)"; //insert database
+        String sql = "insert into  Sections  values(?,?,?,?)"; //insert database
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -111,7 +111,7 @@ public class SectionDAO {
     }
 
     public void Update(int id, String name) {
-        String sql = "update Sections set [name]=? where id=?;";
+        String sql = "update  Sections  set [name]=? where id=?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(2, id);
@@ -124,7 +124,7 @@ public class SectionDAO {
     }
 
     public void Delete(int id) {
-        String sql = "delete from Sections where id=?;";
+        String sql = "delete from  Sections  where id=?;";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
